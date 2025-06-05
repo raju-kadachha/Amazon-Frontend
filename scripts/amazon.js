@@ -47,10 +47,39 @@ products.forEach((product) => {
             Added
           </div>
 
-          <button class="add-to-cart-button button-primary">
+          <button class="add-to-cart-button button-primary js-add-to-cart"
+          data-product-id="${product.id}">
             Add to Cart
           </button>
         </div>
     `;
 });
 document.querySelector(".js-products-grid").innerHTML = productsHTML;
+
+document.querySelectorAll(".js-add-to-cart")
+    .forEach((button) => {
+        button.addEventListener("click", () => {
+            const productId = button.dataset.productId;
+            let matchingItem;
+            // we looping through an array to check if matching item already exist or not
+            cart.forEach((item) => {
+                if (item.productId == productId) {
+                    matchingItem = item;
+                    //save matching item if it exist
+                }
+            })
+            if (matchingItem) {
+                matchingItem.Quentity += 1;
+                // increase quentity by 1 of existing item
+            } else {
+                //if matching item doesnt exist push new item into arr
+                cart.push({
+                    productId,
+                    Quentity: 1
+                });
+            }
+            console.log(cart)
+        });
+
+    });
+
