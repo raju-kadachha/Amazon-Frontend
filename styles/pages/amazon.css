@@ -96,7 +96,7 @@
 }
 
 .product-name {
-  text-overflow: unset; /* Remove ellipsis if set */
+  text-overflow: unset;
   line-height: 1.4;
 }
 
