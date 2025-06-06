@@ -1,5 +1,5 @@
 // we imported "cart" and "products" variable from given filePath 
-import { cart } from "../data/cart.js"; //.js  import { cart as myCart}
+import { cart, addToCart } from "../data/cart.js"; //.js  import { cart as myCart}
 import { products } from "../data/products.js"
 
 let productsHTML = ``;
@@ -60,36 +60,20 @@ products.forEach((product) => {
 document.querySelector(".js-products-grid").innerHTML = productsHTML;
 
 
+function updateCartQuantity() {
+  let cardQuantity = 0;
+  cart.forEach((cartItem) => {
+    cardQuantity += cartItem.Quantity;
+  })
+  document.querySelector(".js-card-quantity").innerHTML = cardQuantity;
+}
 document.querySelectorAll(".js-add-to-cart")
   .forEach((button) => {
     button.addEventListener("click", () => {
 
       const productId = button.dataset.productId;
-      let matchingItem;
-      // we looping through an array to check if matching item already exist or not
-      cart.forEach((item) => {
-        if (item.productId == productId) {
-          matchingItem = item;
-          //save matching item if it exist
-        }
-      })
-      if (matchingItem) {
-        matchingItem.Quantity += 1;
-
-        // increase quentity by 1 of existing item
-      } else {
-        //if matching item doesnt exist push new product into cart arr
-        cart.push({
-          productId,
-          Quantity: 1
-        });
-
-      }
-      let cardQuantity = 0;
-      cart.forEach((item) => {
-        cardQuantity += item.Quantity;
-      })
-      document.querySelector(".js-card-quantity").innerHTML = cardQuantity;
+      addToCart(productId);
+      updateCartQuantity();
       // console.log(cart);
     });
 
