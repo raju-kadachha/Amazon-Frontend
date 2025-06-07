@@ -1,6 +1,7 @@
 // we imported "cart" and "products" variable from given filePath 
 import { cart, addToCart } from "../data/cart.js"; //.js  import { cart as myCart}
 import { products } from "../data/products.js"
+import { formatCurrency } from "./utils/money.js";
 
 let productsHTML = ``;
 
@@ -25,7 +26,7 @@ products.forEach((product) => {
           </div>
 
           <div class="product-price">
-            $${(product.priceCents / 100).toFixed(2)}
+            $${formatCurrency(product.priceCents)}
           </div>
 
           <div class="product-quantity-container">
@@ -63,10 +64,12 @@ document.querySelector(".js-products-grid").innerHTML = productsHTML;
 function updateCartQuantity() {
   let cardQuantity = 0;
   cart.forEach((cartItem) => {
+
     cardQuantity += cartItem.Quantity;
   })
   document.querySelector(".js-card-quantity").innerHTML = cardQuantity;
 }
+updateCartQuantity()
 document.querySelectorAll(".js-add-to-cart")
   .forEach((button) => {
     button.addEventListener("click", () => {
@@ -74,8 +77,5 @@ document.querySelectorAll(".js-add-to-cart")
       const productId = button.dataset.productId;
       addToCart(productId);
       updateCartQuantity();
-      // console.log(cart);
     });
-
   });
-
