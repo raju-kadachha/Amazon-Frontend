@@ -1,4 +1,4 @@
-export { cart, addToCart }; //multiple variable,Functions
+export { cart, addToCart, removeFromCart }; //multiple variable,Functions
 //both are valid
 // export const cart = [];
 let cart = [{
@@ -34,3 +34,15 @@ function addToCart(productId) {
         });
     }
 }
+
+
+function removeFromCart(productId) {
+    const newCart = [];
+    cart.forEach((cartItem) => {
+        if (cartItem.productId !== productId) {
+            newCart.push(cartItem);
+        }
+    });
+    cart = newCart;
+}
+console.log(cart);
