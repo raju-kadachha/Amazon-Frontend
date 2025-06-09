@@ -96,6 +96,7 @@ export function renderOrderSummary() {
           `.js-cart-item-container-${productId}`
         );
         cartItemHTML.remove();
+        renderPaymentSummary();
         // using .remove() method we can delete dom container 
 
       })
