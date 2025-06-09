@@ -2,6 +2,7 @@ export { cart, addToCart, removeFromCart }; //multiple variable,Functions
 //both are valid
 // export const cart = [];
 let cart = JSON.parse(localStorage.getItem('cart'));
+
 if (!cart) {
     cart = [{
         productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
@@ -30,19 +31,28 @@ function addToCart(productId) {
             //save matching cartItem if it exist
         }
     });
+    const selectedQuantity = Number(document.querySelector(`.quntity-select-${productId}`).value)
+    console.log(typeof selectedQuantity)
     if (matchingItem) {
-        matchingItem.Quantity += 1;
+        matchingItem.Quantity += selectedQuantity;
 
         // increase quentity by 1 of existing item
     } else {
         //if matching item doesnt exist push new product into cart arr
         cart.push({
             productId,
-            Quantity: 1,
+            Quantity: selectedQuantity, //quantity selector
             deliveryOptionId: '1'
         });
     }
     saveToStorage();
+    //show message "Added"
+    const message = document.querySelector(`.js-added-to-cart-${productId}`);
+    message.style.opacity = '1';
+    setTimeout(() => {
+        message.style.opacity = '0';
+    }, 2000);
+
 }
 
 

@@ -2,7 +2,7 @@
 import { cart, addToCart } from "../data/cart.js"; //.js  import { cart as myCart}
 import { products } from "../data/products.js"
 import { formatCurrency } from "./utils/money.js";
-
+import cartQuantityFn from "./utils/cartQuantity.js";
 let productsHTML = ``;
 
 products.forEach((product) => {
@@ -30,7 +30,7 @@ products.forEach((product) => {
           </div>
 
           <div class="product-quantity-container">
-            <select>
+            <select class="quntity-select-${product.id}">
               <option selected value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -46,7 +46,7 @@ products.forEach((product) => {
 
           <div class="product-spacer"></div>
 
-          <div class="added-to-cart">
+          <div class="added-to-cart js-added-to-cart-${product.id}">
             <img src="images/icons/checkmark.png">
             Added
           </div>
@@ -58,24 +58,22 @@ products.forEach((product) => {
         </div>
     `;
 });
+
+if (cartQuantityFn() === 0) {
+  document.querySelector(".js-card-quantity").innerHTML = ''
+} else {
+  document.querySelector(".js-card-quantity").innerHTML = cartQuantityFn();
+}
 document.querySelector(".js-products-grid").innerHTML = productsHTML;
 
 
-function updateCartQuantity() {
-  let cardQuantity = 0;
-  cart.forEach((cartItem) => {
 
-    cardQuantity += cartItem.Quantity;
-  })
-  document.querySelector(".js-card-quantity").innerHTML = cardQuantity;
-}
-updateCartQuantity()
 document.querySelectorAll(".js-add-to-cart")
   .forEach((button) => {
     button.addEventListener("click", () => {
 
       const productId = button.dataset.productId;
       addToCart(productId);
-      updateCartQuantity();
+      document.querySelector(".js-card-quantity").innerHTML = cartQuantityFn();
     });
   });
