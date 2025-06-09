@@ -35,10 +35,17 @@ export function renderOrderSummary() {
                 </div>
                 <div class="product-price">$ ${formatCurrency(matchingProduct.priceCents)}</div>
                 <div class="product-quantity">
-                  <span> Quantity: <span class="quantity-label">${cartItem.Quantity}</span> </span>
-                  <span class="update-quantity-link link-primary">
+                  <span> Quantity: 
+                  <span class="quantity-label 
+                  js-quantity-label-${matchingProduct.id}">
+                  ${cartItem.Quantity}
+                  </span>
+                   </span>
+                  <span class="update-quantity-link link-primary 
+                  js-update-quantity-link" data-product-id="${matchingProduct.id}">
                     Update
                   </span>
+                  
                   <span class="delete-quantity-link link-primary js-delete-link"
                   data-product-id="${matchingProduct.id}">
                     Delete
@@ -100,6 +107,16 @@ export function renderOrderSummary() {
         // using .remove() method we can delete dom container 
 
       })
+    });
+  document.querySelectorAll(".js-update-quantity-link")
+    .forEach((link) => {
+      link.addEventListener("click", () => {
+        const productId = link.dataset.productId;
+        // productId===matchingProduct.id
+        const updateBtn = document.querySelector(`.js-quantity-label-${productId}`);
+        updateBtn.setAttribute("contenteditable", "true");
+        updateBtn.focus();
+      });
     });
   document.querySelectorAll(".js-delivery-option")
     .forEach((element) => {
