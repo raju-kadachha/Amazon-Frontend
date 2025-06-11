@@ -11,7 +11,7 @@ document.querySelector(".js-search-button").addEventListener("click", () => {
   searchLogic();
 });
 function searchLogic() {
-  document.querySelector(".js-products-grid").innerHTML = ``;
+  document.querySelector(".js-searched-products").innerHTML = ``;
   const searchBar = document.querySelector(".js-search-bar").value.toLowerCase()
     .split(" ")
     .filter(word => word.trim() !== "");
@@ -22,7 +22,7 @@ function searchLogic() {
       for (let j = 0; j < searchBar.length; j++) {
         if (productWords[i] == searchBar[j]) {
           console.log(3)
-          document.querySelector(".js-products-grid").innerHTML += generateHTML(product); //+=
+          document.querySelector(".js-searched-products").innerHTML += generateHTML(product); //+=
           addToCartEvent();
           return;
         }

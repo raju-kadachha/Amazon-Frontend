@@ -1,7 +1,9 @@
 .main {
   margin-top: 60px;
 }
-
+.js-searched-products {
+  margin: 50px 20px;
+}
 .products-grid {
   display: grid;
 
