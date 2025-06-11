@@ -1,4 +1,4 @@
-export { cart, addToCart, removeFromCart }; //multiple variable,Functions
+export { cart, addToCart, removeFromCart, saveToStorage }; //multiple variable,Functions
 //both are valid
 // export const cart = [];
 let cart = JSON.parse(localStorage.getItem('cart'));
@@ -34,9 +34,7 @@ function addToCart(productId) {
     const selectedQuantity = Number(document.querySelector(`.quntity-select-${productId}`).value)
     console.log(typeof selectedQuantity)
     if (matchingItem) {
-        matchingItem.Quantity += selectedQuantity;
-
-        // increase quentity by 1 of existing item
+        matchingItem.Quantity += selectedQuantity;   // increase quentity by 1 of existing item
     } else {
         //if matching item doesnt exist push new product into cart arr
         cart.push({

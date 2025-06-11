@@ -4,7 +4,7 @@ import { formatCurrency } from "../utils/money.js";
 import { deliveryOptions, getDeliveryOption } from "../../data/deliveryOptions.js";
 import { renderPaymentSummary } from "./paymentSummary.js";
 import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
-
+import { saveToStorage } from "../../data/cart.js";
 export function renderOrderSummary() {
   let cartSummaryHTML = '';
   cart.forEach((cartItem) => {
@@ -42,7 +42,8 @@ export function renderOrderSummary() {
                   </span>
                    </span>
                   <span class="update-quantity-link link-primary 
-                  js-update-quantity-link" data-product-id="${matchingProduct.id}">
+                  js-update-quantity-link" 
+                  data-product-id="${matchingProduct.id}">
                     Update
                   </span>
                   
@@ -112,10 +113,21 @@ export function renderOrderSummary() {
     .forEach((link) => {
       link.addEventListener("click", () => {
         const productId = link.dataset.productId;
-        // productId===matchingProduct.id
-        const updateBtn = document.querySelector(`.js-quantity-label-${productId}`);
-        updateBtn.setAttribute("contenteditable", "true");
-        updateBtn.focus();
+        const quantityLabel = document.querySelector(`.js-quantity-label-${productId}`);
+        quantityLabel.setAttribute("contenteditable", "true");
+        quantityLabel.focus();
+
+        link.addEventListener("click", () => {
+          cart.forEach((cartItem) => {
+            if (cartItem.productId === productId) {
+              cartItem.Quantity = Number(quantityLabel.textContent);
+              quantityLabel.setAttribute("contenteditable", "false");
+              renderOrderSummary();
+              renderPaymentSummary();
+              saveToStorage();
+            }
+          });
+        });
       });
     });
   document.querySelectorAll(".js-delivery-option")
