@@ -12,7 +12,8 @@ document.querySelector(".js-search-button").addEventListener("click", () => {
 });
 function searchLogic() {
   document.querySelector(".js-searched-products").innerHTML = ``;
-  const searchBar = document.querySelector(".js-search-bar").value.toLowerCase()
+  const searchText = document.querySelector(".js-search-bar").value;
+  const searchBar = searchText.toLowerCase()
     .split(" ")
     .filter(word => word.trim() !== "");
   products.forEach((product) => {
@@ -21,7 +22,6 @@ function searchLogic() {
     for (let i = 0; i < productWords.length; i++) {
       for (let j = 0; j < searchBar.length; j++) {
         if (productWords[i] == searchBar[j]) {
-          console.log(3)
           document.querySelector(".js-searched-products").innerHTML += generateHTML(product); //+=
           addToCartEvent();
           return;
@@ -30,10 +30,12 @@ function searchLogic() {
     }
   })
 }
-
+let productsHTMLArr = [];
+// Use an array.push() and join("") to improve rendering performance by minimizing DOM updates
 products.forEach((product) => {
-  document.querySelector(".js-products-grid").innerHTML += generateHTML(product); //+=
+  productsHTMLArr.push(generateHTML(product));
 });
+document.querySelector(".js-products-grid").innerHTML = productsHTMLArr.join("");//update DOM once only
 
 document.querySelector(".js-card-quantity").innerHTML = cartQuantityFn() === 0 ? '' : cartQuantityFn();
 

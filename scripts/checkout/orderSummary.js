@@ -60,6 +60,7 @@ export function renderOrderSummary() {
               ${deliveryOptionsHTML(matchingProduct, cartItem)}
             </div>
           </div>
+          <div class="totalProductPrice">20</div>
         </div>
     `;
   });
@@ -120,7 +121,7 @@ export function renderOrderSummary() {
         link.addEventListener("click", () => {
           cart.forEach((cartItem) => {
             if (cartItem.productId === productId) {
-              cartItem.Quantity = Number(quantityLabel.textContent);
+              cartItem.Quantity = Number(quantityLabel.textContent) !== 0 ? Number(quantityLabel.textContent) : cartItem.Quantity;
               quantityLabel.setAttribute("contenteditable", "false");
               renderOrderSummary();
               renderPaymentSummary();
