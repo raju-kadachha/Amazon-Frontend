@@ -60,7 +60,6 @@ export function renderOrderSummary() {
               ${deliveryOptionsHTML(matchingProduct, cartItem)}
             </div>
           </div>
-          <div class="totalProductPrice">20</div>
         </div>
     `;
   });

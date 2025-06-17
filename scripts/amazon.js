@@ -3,7 +3,8 @@ import { cart, addToCart } from "../data/cart.js"; //.js  import { cart as myCar
 import { products } from "../data/products.js"
 import { formatCurrency } from "./utils/money.js";
 import cartQuantityFn from "./utils/cartQuantity.js";
-
+import { scrollBtnFn } from "./utils/scrollToTopBtn.js";
+scrollBtnFn(); //Scroll to top btn
 document.querySelector(".js-search-bar").addEventListener("input", () => {
   searchLogic();
 });
@@ -12,23 +13,25 @@ document.querySelector(".js-search-button").addEventListener("click", () => {
 });
 function searchLogic() {
   document.querySelector(".js-searched-products").innerHTML = ``;
+  let searchProductHTML = ``;
   const searchText = document.querySelector(".js-search-bar").value;
   const searchBar = searchText.toLowerCase()
     .split(" ")
     .filter(word => word.trim() !== "");
   products.forEach((product) => {
     let productWords = product.name.toLowerCase().split(" ");
-
     for (let i = 0; i < productWords.length; i++) {
       for (let j = 0; j < searchBar.length; j++) {
         if (productWords[i] == searchBar[j]) {
-          document.querySelector(".js-searched-products").innerHTML += generateHTML(product); //+=
-          addToCartEvent();
+          searchProductHTML += generateHTML(product); //+=
+
           return;
         }
       }
     }
   })
+  document.querySelector(".js-searched-products").innerHTML = searchProductHTML;
+  addToCartEvent();
 }
 let productsHTMLArr = [];
 // Use an array.push() and join("") to improve rendering performance by minimizing DOM updates
